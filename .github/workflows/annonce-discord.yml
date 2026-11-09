@@ -1,0 +1,17 @@
+# Annonce automatique dans #annonces (Discord) quand une nouvelle version
+# d'AurOEBay arrive dans ce dépôt (version.json modifié).
+name: Annonce Discord
+on:
+  push:
+    branches: [main]
+    paths: [version.json]
+  workflow_dispatch:
+jobs:
+  annonce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Poster l'annonce
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python3 .github/scripts/annonce.py
