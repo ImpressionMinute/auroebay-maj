@@ -14,6 +14,7 @@ win = f'powershell -ExecutionPolicy Bypass -c "[Net.ServicePointManager]::Securi
 
 payload = {
     "username": "AurOEBay",
+    "avatar_url": f"{raw}/icone.png",
     "content": f"@everyone 🚀 **AurOEBay {version}** est disponible !",
     "allowed_mentions": {"parse": ["everyone"]},
     "embeds": [{
