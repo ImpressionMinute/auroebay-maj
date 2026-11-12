@@ -101,11 +101,19 @@ auroebay_update() {
   done
   [ ${ok} -eq 1 ] || return 1
 
-  say_ok "✅ C’est fait ! AurOEBay ${latest} est installé."
+  say_ok "✅ Fichiers installés : AurOEBay ${latest}."
   say ""
-  printf '\n\033[1;33m%s\033[0m\n' "👉 DERNIÈRE ÉTAPE, OBLIGATOIRE : quitte complètement Chrome (⌘ Cmd + Q), puis rouvre-le."
-  say "   Sans ça, les boutons AurOEBay ne marchent pas sur les pages eBay et AliExpress."
+  # Seen 11/2026: after Cmd+Q, Chrome may keep running the OLD engine with the
+  # new files (« Message non autorisé », licence refused). The ↻ of
+  # chrome://extensions is the sure way: the page is opened for the user.
+  printf '\n\033[1;33m%s\033[0m\n' "👉 2 ÉTAPES OBLIGATOIRES, sinon Chrome garde l’ancienne version :"
+  say "   1. Dans Chrome, sur la page chrome://extensions (je l’ouvre pour toi), clique la flèche ronde ↻ sur la carte AurOEBay."
+  say "   2. Recharge tes onglets eBay et AliExpress (⌘ Cmd + R) et tes pages AurOEBay."
+  say ""
+  say "   Vérifie : AurOEBay → ⚙️ Paramètres doit afficher la version ${latest}."
+  say "   ⚠️ Ne clique JAMAIS « Supprimer » sur AurOEBay et ne déplace pas son dossier : tes données seraient effacées."
   say "   Tes données sont gardées. AurOEBay t’affichera ses nouveautés."
+  open -a "Google Chrome" "chrome://extensions/" >/dev/null 2>&1 || true
   say ""
   say "Tu peux fermer cette fenêtre."
 }

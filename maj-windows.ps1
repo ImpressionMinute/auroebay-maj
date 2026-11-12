@@ -117,9 +117,15 @@ function Update-AurOEBay {
     if (-not $allOk) { return }
     Ok "C'est fait ! AurOEBay $latest est installé."
     Write-Host ''
-    Write-Host "-> DERNIÈRE ÉTAPE, OBLIGATOIRE : ferme complètement Chrome (la croix de toutes ses fenêtres), attends 5 secondes, puis rouvre-le." -ForegroundColor Yellow
-    Write-Host "   Sans ça, les boutons AurOEBay ne marchent pas sur les pages eBay et AliExpress."
+    # Seen 11/2026: Chrome may keep the OLD engine with the new files; the reload of chrome://extensions is the sure way.
+    Write-Host "-> 2 ÉTAPES OBLIGATOIRES, sinon Chrome garde l'ancienne version :" -ForegroundColor Yellow
+    Write-Host "   1. Dans Chrome, sur la page chrome://extensions (je l'ouvre pour toi), clique la flèche ronde (recharger) sur la carte AurOEBay."
+    Write-Host "   2. Recharge tes onglets eBay et AliExpress (F5) et tes pages AurOEBay."
+    Write-Host ""
+    Write-Host "   Vérifie : AurOEBay -> Paramètres doit afficher la version $latest."
+    Write-Host "   ATTENTION : ne clique JAMAIS « Supprimer » sur AurOEBay et ne déplace pas son dossier : tes données seraient effacées." -ForegroundColor Yellow
     Write-Host "   Tes données sont gardées. AurOEBay t'affichera ses nouveautés."
+    try { Start-Process "chrome" "chrome://extensions/" -ErrorAction SilentlyContinue } catch {}
   } finally {
     Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue
   }
